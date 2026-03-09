@@ -41,7 +41,7 @@ Gradle (Kotlin DSL):
 
 ```kotlin
 dependencies {
-    implementation("com.github.ezzine1993:Kotlin-SQL-Query-DSL:1.0.0")
+    implementation("com.github.ezzine1993:kotlin-sql-query-dsl:1.0.0")
 }
 ```
 
@@ -49,7 +49,7 @@ Gradle (Groovy):
 
 ```Groovy
 dependencies {
-    implementation("com.github.ezzine1993:Kotlin-SQL-Query-DSL:1.0.0")
+    implementation("com.github.ezzine1993:kotlin-sql-query-dsl:1.0.0")
 }
 ```
 
