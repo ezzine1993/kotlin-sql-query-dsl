@@ -355,7 +355,7 @@ The DSL exposes many SQL operators as infix functions on expressions.
 ### Other operators
 
 ```kotlin
-"id" IN listOf(1, 2, 3)
+"id" IN list(1, 2, 3)
 "score" BETWEEN "10 AND 20"
 "first_name" CONCAT text(" ")
 ```
