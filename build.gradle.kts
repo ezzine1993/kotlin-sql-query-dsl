@@ -25,8 +25,10 @@ kotlin {
 
 publishing {
     publications {
+
         create<MavenPublication>("release") {
             from(components["java"])
+            from(components["release"])
 
             groupId = "com.github.ezzine1993"
             artifactId = "kotlin-sql-query-dsl"
