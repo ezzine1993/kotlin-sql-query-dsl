@@ -15,11 +15,44 @@ This library lets you generate SQL strings using Kotlin builders instead of conc
 
 ## Installation
 
-Gradle:
+### **1. Add JitPack repository**
+
+Gradle (Kotlin DSL):
 
 ```kotlin
-implementation("h.ezz:sqlQueryDSL:1.0.0")
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
+}
 ```
+
+Gradle (Groovy):
+
+```Groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+```
+
+### **1. Add Dependency**
+
+Gradle (Kotlin DSL):
+
+```kotlin
+dependencies {
+    implementation("com.github.ezzine1993:Kotlin-SQL-Query-DSL:1.0.0")
+}
+```
+
+Gradle (Groovy):
+
+```Groovy
+dependencies {
+    implementation("com.github.ezzine1993:Kotlin-SQL-Query-DSL:1.0.0")
+}
+```
+
 
 
 ## Quick start
