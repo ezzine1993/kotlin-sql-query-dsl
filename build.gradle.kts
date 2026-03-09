@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.ezzine1993"
-version = "1.0.1"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -25,12 +25,10 @@ kotlin {
 
 publishing {
     publications {
-        register<MavenPublication>("release"){
+        create<MavenPublication>("mavenJava"){
             groupId = "com.github.ezzine1993"
             artifactId = "kotlin-sql-query-dsl"
-            version = "1.0.1"
-
-            afterEvaluate { from(components["java"]) }
+            from(components["java"])
         }
     }
 }
