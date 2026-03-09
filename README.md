@@ -61,16 +61,16 @@ dependencies {
 val sql = queryBuilder(pretty = true) {
     select {
         projections {
-            value("id")
-            value("name")
+            value("user.id")
+            "user.name" AS "title"
         }
 
         from {
-            value("users")
+            "users" AS "user"
         }
 
         where {
-            "active" EQL 1
+            "user.active" EQL 1
         }
     }
 }.build()
@@ -160,7 +160,7 @@ val sql = queryBuilder {
         projections { all() }
         from { value("users") }
         where {
-            wrap { ("age" GREATER_OR_EQL 18) AND ("status" EQL "active") }
+            wrap { "age" GREATER_OR_EQL 18 AND "status" EQL "active" }
         }
     }
 }.build()
@@ -232,9 +232,9 @@ val sql = queryBuilder(pretty = true) {
             value("p.title")
         }
         from {
-            value("users u")
+            "user" AS "u"
             join {
-                value("posts p") ON ("u.id" EQL "p.user_id")
+                "posts" AS "p" ON "u.id" EQL "p.user_id"
             }
         }
     }
@@ -381,8 +381,8 @@ The DSL exposes many SQL operators as infix functions on expressions.
 ### Logical
 
 ```kotlin
-("age" GREATER_OR_EQL 18) AND ("status" EQL text("active"))
-("role" EQL text("admin")) OR ("role" EQL text("editor"))
+"age" GREATER_OR_EQL 18 AND "status" EQL text("active")
+"role" EQL text("admin") OR "role" EQL text("editor")
 ```
 
 ### Other operators
@@ -544,13 +544,13 @@ val sql = queryBuilder(pretty = true) {
         from {
             value("users u")
             leftJoin {
-                value("posts p") ON ("u.id" EQL "p.user_id")
+                value("posts p") ON "u.id" EQL "p.user_id"
             }
         }
 
         where {
-            wrap {
-                ("u.active" EQL 1) AND ("u.deleted_at" IS null)
+          "u.deleted_at" IS NOT null OR wrap {
+                "u.active" EQL 1 AND "u.deleted_at" IS null
             }
         }
 
