@@ -1,7 +1,6 @@
 package h.ezz.sqlQueryDsl.components
 
 
-
 /**
  * Represents a collection of SQL arguments combined with a specific separator.
  *
@@ -29,9 +28,13 @@ open class Arguments(val separator: String = " ", list: List<Any> = emptyList())
      * @return The newly added or updated SQLiteral.
      */
     override fun updateValue(new: SQLiteral): SQLiteral {
-        (new as? Expression)?.value()?.also {
-            arguments.remove(it)
+        val value = when (new) {
+            is Operator -> new.right
+            is Expression -> new.value()
+            else -> null
+
         }
+        value?.also { arguments.remove(it) }
         arguments.add(new)
         return new
     }

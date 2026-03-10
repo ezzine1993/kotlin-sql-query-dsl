@@ -184,7 +184,7 @@ class Select() : Statement("SELECT", separator = ", ") {
             }
 
             append(super.build())
-            append(" ")
+            append(lineSeparator)
             from?.append()
             where?.append()
             groupBy?.append()

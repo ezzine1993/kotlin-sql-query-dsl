@@ -29,8 +29,8 @@ open class Statement(
      * the structure of the `FROM` clause in a SQL query.
      */
     fun from(block: From.() -> Unit) {
-        val arguments = From().apply(block)
-        from = Clause("FROM", ", ", arguments = arguments)
+        val arguments = From(lineSeparator).apply(block)
+        from = Clause("FROM", ",", arguments = arguments)
     }
 
 
@@ -41,8 +41,8 @@ open class Statement(
      * representing the conditions of the `WHERE` clause in a SQL query.
      */
     fun where(block: Arguments.() -> Unit) {
-        where = Clause("WHERE", " ")
-        where?.applyArguments(block)
+        val arguments = Arguments().apply(block)
+        where = Clause("WHERE", " ", arguments = arguments)
     }
 
 
@@ -54,7 +54,7 @@ open class Statement(
      * of the `FROM` clause. It defines various join methods, allowing specification of
      * join types and related conditions.
      */
-    class From() : Arguments() {
+    class From(separator: String) : Arguments(separator = separator) {
 
         /**
          * Represents a SQL JOIN clause in a query.
@@ -73,7 +73,6 @@ open class Statement(
                 setOperator(name = "ON", right = right)
 
             infix fun Any.USING(column: String): SQLiteral = this.USING(listOf(column))
-
 
 
             infix fun Any.USING(columns: List<String>): SQLiteral =

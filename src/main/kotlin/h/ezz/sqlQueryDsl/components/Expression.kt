@@ -75,4 +75,20 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
     }
 
     open fun value(): SQLiteral? = value
+
+}
+
+
+fun main() {
+    val query = queryBuilder(pretty = true) {
+        select {
+            where {
+                OR( "1" AS "2")
+                wrap { OR("x") AS "1" }
+                OR("S")
+            }
+        }
+    }
+
+    println(query.build())
 }

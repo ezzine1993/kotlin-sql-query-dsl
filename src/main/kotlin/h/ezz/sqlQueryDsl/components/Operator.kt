@@ -52,6 +52,6 @@ open class Operator(
      * or `null` if there is no operand.
      */
     override fun value(): SQLiteral? {
-        return right
+        return left
     }
 }
