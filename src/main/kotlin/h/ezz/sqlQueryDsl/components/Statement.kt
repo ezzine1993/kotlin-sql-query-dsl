@@ -41,7 +41,7 @@ open class Statement(
      * representing the conditions of the `WHERE` clause in a SQL query.
      */
     fun where(block: Arguments.() -> Unit) {
-        val arguments = Arguments().apply(block)
+        val arguments = Arguments(lineSeparator).apply(block)
         where = Clause("WHERE", " ", arguments = arguments)
     }
 

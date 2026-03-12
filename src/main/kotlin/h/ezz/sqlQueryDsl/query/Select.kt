@@ -206,7 +206,7 @@ class Select() : Statement("SELECT", separator = ", ") {
      * This class operates within the context of a `Select` statement and is designed
      * to be used as part of configuring the query's sorting conditions.
      */
-    class OrderBy() : Arguments() {
+    class OrderBy() : Arguments(separator = ", ") {
 
         fun Expression.desc(value: Any): SQLiteral =
             updateValue(Wrapper(open = "", close = " DESC", value = value.toLiteral()))
