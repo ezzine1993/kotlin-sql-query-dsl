@@ -156,8 +156,8 @@ fun Expression.all(): SQLiteral =
 /**
  * Wraps the provided expression in parentheses.
  */
-fun Expression.wrap(expression: () -> SQLiteral): SQLiteral =
-    updateValue(wrapParentheses(expression()))
+fun Expression.wrap(block: Expression.() -> SQLiteral): SQLiteral =
+    updateValue(wrapParentheses(Expression().apply { block() }))
 
 /**
  * Inserts a text literal wrapped in single quotes.

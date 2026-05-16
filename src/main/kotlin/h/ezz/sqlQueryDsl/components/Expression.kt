@@ -87,7 +87,7 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
 
     fun ifNotNull(value: Any?, block: Expression.(Any) -> Unit): SQLiteral {
         value?.also {
-            this@Expression.block(it)
+            this.block(it)
         }
         return this
     }
