@@ -85,32 +85,33 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
 
     open fun value(): SQLiteral? = value
 
-    fun ifNotNull(value: Any?, block: Expression.(Any) -> Unit) {
+    fun ifNotNull(value: Any?, block: Expression.(Any) -> Unit): SQLiteral {
         value?.also {
             this@Expression.block(it)
         }
+        return this
     }
 
-    fun andEqual(columnName: String, to: Any?) {
-        this.ifNotNull(to) {
+    fun andEqual(columnName: String, to: Any?): SQLiteral {
+        return this.ifNotNull(to) {
             this AND (columnName EQL it)
         }
     }
 
-    fun andNotEQL(columnName: String, to: Any?) {
-        this.ifNotNull(to) {
+    fun andNotEQL(columnName: String, to: Any?): SQLiteral {
+        return this.ifNotNull(to) {
             this AND (columnName NOT_EQL it)
         }
     }
 
-    fun orEqual(columnName: String, to: Any?) {
-        this.ifNotNull(to) {
+    fun orEqual(columnName: String, to: Any?): SQLiteral {
+        return this.ifNotNull(to) {
             this OR (columnName EQL it)
         }
     }
 
-    fun orNotEQL(columnName: String, to: Any?) {
-        this.ifNotNull(to) {
+    fun orNotEQL(columnName: String, to: Any?): SQLiteral {
+        return this.ifNotNull(to) {
             this OR (columnName NOT_EQL it)
         }
     }
