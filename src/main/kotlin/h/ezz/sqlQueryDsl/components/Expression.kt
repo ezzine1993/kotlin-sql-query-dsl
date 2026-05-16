@@ -37,6 +37,7 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
     infix fun Any.DIV(right: Any?): SQLiteral = setOperator(name = "/", right = right)
     infix fun Any.X(right: Any?): SQLiteral = setOperator(name = "*", right = right)
     infix fun Any.EQL(right: Any?): SQLiteral = setOperator(name = "=", right = right)
+    infix fun Any.NOT_EQL(right: Any?): SQLiteral = setOperator(name = "!=", right = right)
     infix fun Any.BETWEEN(right: Any?): SQLiteral = setOperator(name = "BETWEEN", right = right)
     infix fun Any.ANY(value: Any?): SQLiteral = setOperator(name = "ANY", right = value)
     infix fun Any.ALL(value: Any?): SQLiteral = setOperator(name = "ALL", right = value)
@@ -54,7 +55,7 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
      * @return The newly created [SQLiteral] instance representing the updated operator.
      */
     protected fun Any.setOperator(name: String, right: Any?): SQLiteral {
-        val left  = if (this@Expression == this) (this as Expression).value() else this.toLiteral()
+        val left = if (this@Expression == this) (this as Expression).value() else this.toLiteral()
         return updateValue(
             Operator(
                 name = name,
@@ -83,5 +84,35 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
     }
 
     open fun value(): SQLiteral? = value
+
+    fun ifNotNull(value: Any?, block: Expression.(Any) -> Unit) {
+        value?.also {
+            this@Expression.block(it)
+        }
+    }
+
+    fun andEqual(columnName: String, to: Any?) {
+        this.ifNotNull(to) {
+            this AND (columnName EQL it)
+        }
+    }
+
+    fun andNotEQL(columnName: String, to: Any?) {
+        this.ifNotNull(to) {
+            this AND (columnName NOT_EQL it)
+        }
+    }
+
+    fun orEqual(columnName: String, to: Any?) {
+        this.ifNotNull(to) {
+            this OR (columnName EQL it)
+        }
+    }
+
+    fun orNotEQL(columnName: String, to: Any?) {
+        this.ifNotNull(to) {
+            this OR (columnName NOT_EQL it)
+        }
+    }
 
 }

@@ -50,4 +50,5 @@ open class Arguments(val separator: String = " ", list: List<Any> = emptyList())
 
 
     override fun build(): String = arguments.joinToString(separator) { it.build() }
+
 }
