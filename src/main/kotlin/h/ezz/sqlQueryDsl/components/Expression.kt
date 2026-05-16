@@ -22,7 +22,7 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
 
     infix fun Any.IN(right: Any?): SQLiteral = setOperator(name = "IN", right = right)
     infix fun Any.LIKE(right: Any?): SQLiteral = setOperator(name = "LIKE", right = right)
-    infix fun Any.IS(right: Any??): SQLiteral = setOperator(name = "IS", right = right)
+    infix fun Any.IS(right: Any?): SQLiteral = setOperator(name = "IS", right = right)
     infix fun Any.AND(right: Any?): SQLiteral = setOperator(name = "AND", right = right)
     infix fun Any.OR(right: Any?): SQLiteral = setOperator(name = "OR", right = right)
     infix fun Any.NOT(right: Any?): SQLiteral = setOperator(name = "NOT", right = right)
@@ -94,25 +94,23 @@ open class Expression(protected open var value: SQLiteral? = null) : SQLiteral {
 
     fun andEqual(columnName: String, to: Any?): SQLiteral {
         return this.ifNotNull(to) {
-            this AND (columnName EQL it)
+            this AND columnName EQL it
         }
     }
 
     fun andNotEQL(columnName: String, to: Any?): SQLiteral {
         return this.ifNotNull(to) {
-            this AND (columnName NOT_EQL it)
+            this AND columnName NOT_EQL it
         }
     }
 
-    fun orEqual(columnName: String, to: Any?): SQLiteral {
-        return this.ifNotNull(to) {
-            this OR (columnName EQL it)
-        }
+    fun Any.orEqual(columnName: String, to: Any?): SQLiteral {
+        return this OR columnName EQL to
     }
 
     fun orNotEQL(columnName: String, to: Any?): SQLiteral {
         return this.ifNotNull(to) {
-            this OR (columnName NOT_EQL it)
+            this OR columnName NOT_EQL it
         }
     }
 

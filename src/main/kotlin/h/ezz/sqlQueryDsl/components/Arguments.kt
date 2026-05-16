@@ -16,7 +16,7 @@ package h.ezz.sqlQueryDsl.components
  */
 @SQLQueryMaker
 open class Arguments(val separator: String = " ", list: List<Any> = emptyList()) : Expression() {
-    val arguments = mutableListOf<SQLiteral>().apply { addAll(list.map { it.toLiteral() }) }
+    val arguments = mutableSetOf<SQLiteral>().apply { addAll(list.map { it.toLiteral() }) }
 
 
     /**
@@ -28,13 +28,12 @@ open class Arguments(val separator: String = " ", list: List<Any> = emptyList())
      * @return The newly added or updated SQLiteral.
      */
     override fun updateValue(new: SQLiteral): SQLiteral {
-
         if (new is Operator) {
             new.right.also { arguments.remove(it) }
             new.left.also { arguments.remove(it) }
 
         } else if (new is Expression && new.value() == arguments.lastOrNull()) {
-            arguments.removeLastOrNull()
+            arguments.remove(new.value())
         }
         arguments.add(new)
         return new
