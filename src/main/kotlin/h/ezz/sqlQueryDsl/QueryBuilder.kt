@@ -17,21 +17,7 @@ import h.ezz.sqlQueryDsl.query.Update
  * The constructed SQL is represented as a string through the implementation of the `build` method
  * from the `SQLiteral` interface.
  */
-class QueryBuilder() : SQLiteral {
-    companion object {
-        /**
-         * Determines whether the SQL query output should be formatted for improved readability.
-         *
-         * When set to `true`, the generated SQL statements will include additional formatting
-         * such as line breaks and indentation, making them easier to read and debug. When set to `false`,
-         * the SQL output will be compact with minimal spacing.
-         *
-         * This property is primarily used within the `QueryBuilder` class to influence the formatting
-         * style of constructed SQL queries.
-         */
-        internal var pretty = true
-    }
-
+class QueryBuilder(
     /**
      * Holds the current SQL statement being built or managed by the `QueryBuilder`.
      *
@@ -45,6 +31,20 @@ class QueryBuilder() : SQLiteral {
      * management of SQL queries.
      */
     private var statement: Statement? = null
+) : SQLiteral {
+    companion object {
+        /**
+         * Determines whether the SQL query output should be formatted for improved readability.
+         *
+         * When set to `true`, the generated SQL statements will include additional formatting
+         * such as line breaks and indentation, making them easier to read and debug. When set to `false`,
+         * the SQL output will be compact with minimal spacing.
+         *
+         * This property is primarily used within the `QueryBuilder` class to influence the formatting
+         * style of constructed SQL queries.
+         */
+        internal var pretty = true
+    }
 
     /**
      * Constructs and returns a `Select` statement for building SQL queries.
@@ -112,7 +112,7 @@ class QueryBuilder() : SQLiteral {
      * @param new The statement to set as the current statement. It must be a subtype of `Statement`.
      * @return The provided statement, which is either newly set or already existing.
      */
-    private fun <T : Statement> setStatement(new: T): T {
+    fun <T : Statement> setStatement(new: T): T {
         if (statement == null)
             statement = new
         return new
