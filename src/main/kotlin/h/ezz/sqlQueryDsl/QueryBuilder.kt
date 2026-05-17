@@ -30,7 +30,8 @@ class QueryBuilder(
      * It is utilized internally by the `QueryBuilder` methods to ensure proper construction and
      * management of SQL queries.
      */
-    private var statement: Statement? = null
+    private var statement: Statement? = null,
+    pretty: Boolean = false
 ) : SQLiteral {
     companion object {
         /**
@@ -44,6 +45,10 @@ class QueryBuilder(
          * style of constructed SQL queries.
          */
         internal var pretty = true
+    }
+
+    init {
+        QueryBuilder.pretty = pretty
     }
 
     /**
